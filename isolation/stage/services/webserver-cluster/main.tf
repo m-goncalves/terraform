@@ -41,14 +41,12 @@ resource "aws_autoscaling_group" "test-auto-scaling" {
         value               = "test-asg"
         propagate_at_launch = true
     }
-
 }
 
 # An auto scaling group needs to know in which VPC subnets the EC2.
 # instances will to be deployed. The bellow resources act like filters.
 data "aws_vpc" "default" {
     default = true
-
 }
 
 data "aws_subnet_ids" "default" {
@@ -66,7 +64,6 @@ resource "aws_security_group" "test-security-group" {
         #cidr_blocks allow to specify IP adress ranges.
         cidr_blocks = ["0.0.0.0/0"]
     }
-
 }
 
 # A loadbalancer is required since the system consists of multiple servers.
@@ -155,4 +152,16 @@ resource "aws_lb_target_group" "test-target-group" {
       healthy_threshold         = 2
       unhealthy_threshold       = 2
     }
+}
+
+terraform {
+  backend "s3" {
+      bucket            = "unique-tf-state-bucket"
+      # The file path where the state file will be written.
+      key               = "stage/services/webserver-cluster/terraform.tfstate"
+      region            = "sa-east-1"
+      dynamodb_table    = "terraform_locks"
+      # Ensures that the terraform state will be encrypted on disk. 
+      encrypt           = true
+  }
 }
