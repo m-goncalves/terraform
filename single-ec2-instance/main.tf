@@ -18,7 +18,7 @@ resource "aws_instance" "single-instance" {
     user_data = <<-EOF
                 #!/bin/bash
                 echo "hello, World!"> index.html
-                nohub busybox httpd -f -p ${var.server_port} &
+                nohup busybox httpd -f -p ${var.server_port} &
                 EOF
 }
 
