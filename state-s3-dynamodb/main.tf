@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "s3_bucket" {
-    # The bucket must created before the creation of the backend.
+    # The bucket must be created before the creation of the backend.
     # The name of the s3-bucket must be unique.
     bucket = "unique-tf-state-bucket"
     lifecycle {
@@ -53,7 +53,7 @@ terraform {
   }
 }
 
-# To delete the DynamoDB and the S3 Bucket the backend must first be deleted.
+# To delete the DynamoDB and the S3 Bucket the backend must be deleted first.
 # As for the creation of S3 and DB, their deletion must be a two step process.
 output "s3_bucket_arn" {
     value           = "aws_s3_bucket.s3_bucket.arn"
