@@ -155,12 +155,4 @@ resource "aws_lb_target_group" "test-target-group" {
       healthy_threshold         = 2
       unhealthy_threshold       = 2
     }
-
 }
-
-# A way to expose information to the user.
-output "alb_dns_name" {
-    value = aws_lb.test-loadbalancer.dns_name
-    description = "The domain name of the load balancer."
-}
-
