@@ -1,11 +1,11 @@
 provider "aws" {
-    region = "us-east-2"
+    region = "sa-east-1"
 }
 
 # To spin up an auto scaling group an "aws_launch_configuration" is needed.
 # This ALC requires an "image_id" as well as a "security_group".
 resource "aws_launch_configuration" "test-auto-scaling" {
-    image_id        = "ami-0c55b159cbfafe1f0"
+    image_id        = "ami-022082b7f1da62478"
     instance_type   = "t2.micro"
     # Instructs the ec2 instance to use the security group.
     # A security group acts as a virtual firewall to control inbound and outbound traffic.
