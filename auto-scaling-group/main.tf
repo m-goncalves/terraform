@@ -17,7 +17,7 @@ resource "aws_launch_configuration" "test-auto-scaling" {
     user_data = <<-EOF
                 #!/bin/bash
                 echo "hello, World!"> index.html
-                nohub busybox test-httpd -f -p ${var.server_port} &
+                nohup busybox test-httpd -f -p ${var.server_port} &
                 EOF
     # Makes sure that a replacement for a specific resource will be created before
     # this resource gets deleted.
