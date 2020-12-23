@@ -64,3 +64,5 @@ output "dynamodb_table_name" {
     value           = "aws_dynamodb_table.terraform_locks.name"
     description     = "The name of the DynamoDB table."
 }
+
+# Not working with "terraform init -backend-config=backend.hcl".
