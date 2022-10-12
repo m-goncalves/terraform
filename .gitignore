@@ -36,3 +36,5 @@ command.txt
 variables.tf
 vars.tf
 *.tar.gz
+*.terraform.lock.hcl
+*.kk
