@@ -1,15 +1,7 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-    }
-  }
-}
+
 
 provider "aws" {
   region                   = "us-east-1"
-  shared_credentials_files = ["~/.aws/credentials"]
-  profile                  = "vscode"
 }
 
 resource "aws_launch_configuration" "cluster_webservers_lc" {
@@ -17,7 +9,12 @@ resource "aws_launch_configuration" "cluster_webservers_lc" {
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.cluster_webservers_sg.id]
 
-  user_data = file("./user-data.sh")
+  user_data = templatefile("user-data.sh", {
+    server_port = var.server_port
+    db_address = data.terraform_remote_state.db.outputs.address
+    db_port = data.terraform_remote_state.db.outputs.port
+  })
+
   lifecycle {
     create_before_destroy = true
   }
@@ -123,13 +120,12 @@ resource "aws_security_group" "cluster_webservers_sg" {
     to_port     = var.server_port
   }
 }
-
 terraform {
   backend "s3" {
-    bucket         = "tfur-state-bucket"
-    key            = "stage/services/webserver-cluster/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
+    bucket = "tfur-state"
+    key = "global/s3/stage/services/webserver-cluster/terraform.tfstate"
+    region = "us-east-1"
+    dynamodb_table = "tf-state"
+    encrypt = "true"
   }
 }

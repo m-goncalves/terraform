@@ -13,8 +13,8 @@ data "aws_subnets" "subnets_default_vpc" {
 data "terraform_remote_state" "db" {
   backend = "s3"
   config = {
-    bucket = "tfur-state-bucket"
-    key = "stage/data-stores/mysql/terraform-tfstate"
+    bucket = "tfur-state"
+    key = "stage/data-stores/mysql/terraform.tfstate"
     region = "us-east-1"
    }
   
