@@ -17,4 +17,5 @@ data "terraform_remote_state" "db" {
     key = var.db_remote_state_key
     region = "us-east-1"
    }
+  
 }
